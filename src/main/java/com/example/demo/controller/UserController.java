@@ -23,7 +23,7 @@ public class UserController {
         List<UserEntity> users = userRepository.findAll();
         List<UserInfo> resultUsers = new ArrayList<>();
         for (UserEntity user : users) {
-            resultUsers.add(new UserInfo(user.getFirstName(), user.getLastName()));
+            resultUsers.add(new UserInfo(user.getId(),user.getFirstName(), user.getLastName()));
         }
 
         return ResponseEntity.ok(resultUsers);
@@ -32,7 +32,7 @@ public class UserController {
     @PostMapping("/users")
     public ResponseEntity<UserInfo> createUser(@RequestBody UserInfo userInfo) {
         userRepository.save(new UserEntity(userInfo.getFirstName(), userInfo.getLastName()));
-        return ResponseEntity.ok(new UserInfo(userInfo.getFirstName(), userInfo.getLastName()));
+        return ResponseEntity.ok(new UserInfo(userInfo.getId(), userInfo.getFirstName(), userInfo.getLastName()));
 
     }
 
@@ -73,4 +73,9 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
+    @DeleteMapping("/users/{id}")
+    public ResponseEntity<Void> deleteUserById(@PathVariable Long id) {
+        userRepository.deleteById(id);
+        return ResponseEntity.ok().build();
+    }
 }
