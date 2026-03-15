@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
@@ -77,5 +78,20 @@ public class UserController {
     public ResponseEntity<Void> deleteUserById(@PathVariable Long id) {
         userRepository.deleteById(id);
         return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/users/edit/{id}")
+    public ResponseEntity<UserEntity> editUser(
+            @PathVariable Long id,
+            @RequestBody UserEntity updatedUser) {
+
+        return userRepository.findById(id)
+                .map(user -> {
+                    user.setFirstName(updatedUser.getFirstName());
+                    user.setLastName(updatedUser.getLastName());
+                    userRepository.save(user);
+                    return ResponseEntity.ok(user);
+                })
+                .orElse(ResponseEntity.notFound().build());
     }
 }

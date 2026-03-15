@@ -32,6 +32,7 @@ function userBuildTableRow(user) {
       "<td>" + user.firstname + "</td>" +
       "<td>" + user.lastname + "</td>" +
       "<td>" + "<button type='button' id='deleteButton' class='btn btn-primary' onclick='deleteClick(" + user.id +");'> Delete </button>"+ "</td>" +
+      "<td>" + "<button type='button' id='editButton' class='btn btn-primary' onclick='editClick(" + user.id +");'> Edit </button>"+ "</td>" +
       "</tr>";
 }
 
@@ -89,6 +90,26 @@ function deleteClick(id) {
     $.ajax({
       url: 'http://localhost:8080/api/users/' + id,
       type: 'DELETE',
+      success: function () {
+         location.reload();
+      },
+      error: function (request, message, error) {
+         handleException(request, message, error);
+      }
+   });
+}
+
+function editClick(id) {
+
+   const user = {};
+   user.firstName = $("#firstname").val();
+   user.lastName = $("#lastname").val();
+
+   $.ajax({
+      url: 'http://localhost:8080/api/users/edit/' + id,
+      type: 'PUT',
+      contentType: "application/json;charset=utf-8",
+      data: JSON.stringify(user),
       success: function () {
          location.reload();
       },
