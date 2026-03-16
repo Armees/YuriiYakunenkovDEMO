@@ -33,6 +33,7 @@ function userBuildTableRow(user) {
       "<td>" + user.lastname + "</td>" +
       "<td>" + "<button type='button' id='deleteButton' class='btn btn-primary' onclick='deleteClick(" + user.id +");'> Delete </button>"+ "</td>" +
       "<td>" + "<button type='button' id='editButton' class='btn btn-primary' onclick='editClick(" + user.id +");'> Edit </button>"+ "</td>" +
+      "<td>" + "<form> <input type='checkbox' id='check"+ user.id +"' name='checkbox' value='yes' > </form>"+ "</td>" +
       "</tr>";
 }
 
@@ -97,6 +98,18 @@ function deleteClick(id) {
          handleException(request, message, error);
       }
    });
+}
+function deleteChekClick() {
+   let selectedIds = [];
+
+   $("#userTable tbody input[type='checkbox']:checked").each(function () {
+      let id = $(this).attr('id').replace('check', '');
+      selectedIds.push(parseInt(id));
+   });
+
+   for(const id of selectedIds){
+         deleteClick(id)
+   }
 }
 
 function editClick(id) {
