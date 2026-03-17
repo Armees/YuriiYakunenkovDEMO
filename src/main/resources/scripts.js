@@ -31,6 +31,7 @@ function userBuildTableRow(user) {
    return "<tr>" +
       "<td>" + user.firstname + "</td>" +
       "<td>" + user.lastname + "</td>" +
+      "<td>" + user.age + "</td>" +
       "<td>" + "<button type='button' id='deleteButton' class='btn btn-primary' onclick='deleteClick(" + user.id +");'> Delete </button>"+ "</td>" +
       "<td>" + "<button type='button' id='editButton' class='btn btn-primary' onclick='editClick(" + user.id +");'> Edit </button>"+ "</td>" +
       "<td>" + "<form> <input type='checkbox' id='check"+ user.id +"' name='checkbox' value='yes' > </form>"+ "</td>" +
@@ -50,12 +51,14 @@ function handleException(request, message, error) {
 function formClear() {
    $("#firstname").val("");
    $("#lastname").val("");
+   $("#age").val("");
 }
 
 function updateClick() {
    const User = {};
    User.firstname = $("#firstname").val();
    User.lastname = $("#lastname").val();
+   User.age=$("#age").val();
    userAdd(User);
 }
 
@@ -117,6 +120,7 @@ function editClick(id) {
    const user = {};
    user.firstName = $("#firstname").val();
    user.lastName = $("#lastname").val();
+   user.age = $("age").val();
 
    $.ajax({
       url: 'http://localhost:8080/api/users/edit/' + id,

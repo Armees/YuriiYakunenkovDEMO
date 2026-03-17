@@ -13,13 +13,25 @@ public class UserInfo {
     @JsonProperty("lastname")
     private String lastName;
 
+    @JsonProperty("age")
+    private int age;
+
     public UserInfo() {
     }
 
-    public UserInfo(long id, String firstName, String lastName) {
+    public UserInfo(long id, String firstName, String lastName, int age) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.age= age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public int getAge() {
+        return age;
     }
 
     public long getId() {

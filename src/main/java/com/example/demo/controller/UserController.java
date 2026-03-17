@@ -24,7 +24,7 @@ public class UserController {
         List<UserEntity> users = userRepository.findAll();
         List<UserInfo> resultUsers = new ArrayList<>();
         for (UserEntity user : users) {
-            resultUsers.add(new UserInfo(user.getId(),user.getFirstName(), user.getLastName()));
+            resultUsers.add(new UserInfo(user.getId(),user.getFirstName(), user.getLastName(), user.getAge()));
         }
 
         return ResponseEntity.ok(resultUsers);
@@ -32,8 +32,8 @@ public class UserController {
 
     @PostMapping("/users")
     public ResponseEntity<UserInfo> createUser(@RequestBody UserInfo userInfo) {
-        userRepository.save(new UserEntity(userInfo.getFirstName(), userInfo.getLastName()));
-        return ResponseEntity.ok(new UserInfo(userInfo.getId(), userInfo.getFirstName(), userInfo.getLastName()));
+        userRepository.save(new UserEntity(userInfo.getFirstName(), userInfo.getLastName(), userInfo.getAge()));
+        return ResponseEntity.ok(new UserInfo(userInfo.getId(), userInfo.getFirstName(), userInfo.getLastName(), userInfo.getAge()));
 
     }
 
@@ -89,6 +89,7 @@ public class UserController {
                 .map(user -> {
                     user.setFirstName(updatedUser.getFirstName());
                     user.setLastName(updatedUser.getLastName());
+                    user.setAge(updatedUser.getAge());
                     userRepository.save(user);
                     return ResponseEntity.ok(user);
                 })
