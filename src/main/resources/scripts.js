@@ -56,6 +56,11 @@ function formClear() {
 
 function updateClick() {
    const User = {};
+   const age=parseInt( $("#age").val());
+   if(isNaN(age)||age<1||age>100){
+       alert("wrong age");
+       return;
+   }
    User.firstname = $("#firstname").val();
    User.lastname = $("#lastname").val();
    User.age=$("#age").val();
@@ -118,9 +123,14 @@ function deleteChekClick() {
 function editClick(id) {
 
    const user = {};
+   const age=parseInt( $("#age").val());
+   if(isNaN(age)||age<1||age>100){
+       alert("wrong age");
+       return;
+   }
    user.firstName = $("#firstname").val();
    user.lastName = $("#lastname").val();
-   user.age = $("age").val();
+   user.age = $("#age").val();
 
    $.ajax({
       url: 'http://localhost:8080/api/users/edit/' + id,
@@ -152,6 +162,19 @@ function updateLastNamesClick() {
 function updateFirstNamesClick() {
    $.ajax({
       url: 'http://localhost:8080/api/users/firstname',
+      type: 'PUT',
+      success: function () {
+         location.reload();
+      },
+      error: function (request, message, error) {
+         handleException(request, message, error);
+      }
+   });
+}
+
+function updateAgeClick() {
+   $.ajax({
+      url: 'http://localhost:8080/api/users/age',
       type: 'PUT',
       success: function () {
          location.reload();

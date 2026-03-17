@@ -52,7 +52,7 @@
       </div>
       <div class="form-group">
           <label for="age">age</label>
-          <input type="text" id="age" class="form-control"/>
+          <input type="text" id="age" min="0" max="100" class="form-control"/>
       </div>
       <div class="row">
          <div class="col-xs-12">
@@ -91,6 +91,16 @@
                       class="btn btn-primary"
                       onclick="updateFirstNamesClick();">
                   Update first names
+              </button>
+          </div>
+      </div>
+      <div class="row">
+          <div class="col-xs-12">
+              <button type="button"
+                      id="updateAgeButton"
+                      class="btn btn-primary"
+                      onclick="updateAgeClick();">
+                  Update age
               </button>
           </div>
       </div>

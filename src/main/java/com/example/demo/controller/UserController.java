@@ -63,6 +63,16 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
+    @PutMapping("/users/age")
+    public ResponseEntity<Void> updateAllAge() {
+        List<UserEntity> users = userRepository.findAll();
+        for (UserEntity user : users) {
+            user.setAge(100);
+        }
+        userRepository.saveAll(users);
+        return ResponseEntity.ok().build();
+    }
+
     @DeleteMapping("/users/even")
     public ResponseEntity<Void> deleteEvenUsers() {
         List<UserEntity> users = userRepository.findAll();
@@ -84,7 +94,6 @@ public class UserController {
     public ResponseEntity<UserEntity> editUser(
             @PathVariable Long id,
             @RequestBody UserEntity updatedUser) {
-
         return userRepository.findById(id)
                 .map(user -> {
                     user.setFirstName(updatedUser.getFirstName());
